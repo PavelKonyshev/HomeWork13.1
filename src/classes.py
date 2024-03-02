@@ -2,7 +2,7 @@ class Category:
     """Создание класса категории"""
     name = str
     description: str
-    goods: list
+    goods: str
     total_numbers_of_category = 0
     unique_goods = 0
 
@@ -15,6 +15,14 @@ class Category:
 
         Category.total_numbers_of_category += 1
         Category.unique_goods += 1
+
+    def get_name(self):
+        return self.name
+
+    def get_description(self):
+        return self.description
+    def get_goods(self):
+        return self.goods
 
 class Product:
     name: str
@@ -29,4 +37,14 @@ class Product:
         self.price = price
         self.quantity_in_stock = quantity_in_stock
 
+    def get_product_name(self):
+        return self.name
 
+    def get_product_description(self):
+        return self.description
+
+    def get_product_price(self):
+        return self.price
+
+    def get_product_quantity_in_stock(self):
+        return self.quantity_in_stock
