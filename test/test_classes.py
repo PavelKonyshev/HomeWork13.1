@@ -3,6 +3,7 @@ import pytest
 from src.classes import Category, Product
 
 
+
 @pytest.fixture
 def class_category():
     return Category('Средства личной гигиены',
@@ -23,7 +24,7 @@ def test_category_init(class_category):
                         "quantity": 6
                     }
     assert class_category.total_numbers_of_category == 1
-    assert  class_category.unique_goods == 1
+    assert class_category.unique_goods == 1
 
 @pytest.fixture
 def class_product():
@@ -35,3 +36,56 @@ def test_product_init(class_product):
     assert class_product.description == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
     assert class_product.price == 585.91
     assert class_product.quantity_in_stock == 6
+
+
+def test_get_name(class_category):
+    class_category.get_name()
+    assert class_category.get_name() == 'Средства личной гигиены'
+
+
+def test_get_description(class_category):
+    class_category.get_description()
+    assert class_category.get_description() == 'Для волос и не только'
+
+
+def test_get_goods(class_category):
+    class_category.get_goods()
+    assert class_category.get_goods() == {
+        "name": "Head & Shoulders",
+        "description": "Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл",
+        "price": 585.91,
+        "quantity": 6
+    }
+
+
+@pytest.fixture
+def class_products():
+    return Product("Head & Shoulders", "Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл",
+                   585.91, 6)
+
+
+def test_products_init(class_product):
+    assert class_product.name == 'Head & Shoulders'
+    assert class_product.description == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
+    assert class_product.price == 585.91
+    assert class_product.quantity_in_stock == 6
+
+
+def test_products_name(class_product):
+    class_product.get_product_name()
+    assert class_product.get_product_name() == 'Head & Shoulders'
+
+
+def test_products_description(class_product):
+    class_product.get_product_description()
+    assert class_product.get_product_description() == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
+
+
+def test_products_price(class_product):
+    class_product.get_product_price()
+    assert class_product.get_product_price() == 585.91
+
+
+def test_products_quantity_in_stock(class_product):
+    class_product.get_product_quantity_in_stock()
+    assert class_product.get_product_quantity_in_stock() != 5
