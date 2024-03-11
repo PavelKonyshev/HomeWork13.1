@@ -1,10 +1,11 @@
-from src.classes import Category, Product
+from class_category import Category
+from class_product import Product
 from src.utils import load_data
 from pprint import pprint
 
 def main():
     data = load_data()
-#    list_category = []
+    list_category = []
 #    for unit in data:
 #        list_product = [un for un in unit["products"]]
 #        category = Category(unit["name"], unit["description"], unit["products"])
@@ -18,7 +19,7 @@ def main():
 #                              element["price"], element["quantity"])
 #            list_category.append(f'{product.get_product_name()}\n'
 #                          f'{product.new_price}\n'
-#                          f'{product.get_product_quantity_in_stock()}\n\n'
+#                          f'{product.get_product_quantity()}\n\n'
 #                          )
 #       pprint(list_category)
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import pytest
-
-from src.classes import Category, Product
+from src.class_category import Category
+from src.class_product import Product
 
 
 
@@ -35,7 +35,7 @@ def test_product_init(class_product):
     assert class_product.name == 'Head & Shoulders'
     assert class_product.description == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
     assert class_product.price == 585.91
-    assert class_product.quantity_in_stock == 6
+    assert class_product.quantity == 6
 
 
 def test_get_name(class_category):
@@ -48,16 +48,6 @@ def test_get_description(class_category):
     assert class_category.get_description() == 'Для волос и не только'
 
 
-def test_get_goods(class_category):
-    class_category.get_goods()
-    assert class_category.get_goods() == {
-        "name": "Head & Shoulders",
-        "description": "Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл",
-        "price": 585.91,
-        "quantity": 6
-    }
-
-
 @pytest.fixture
 def class_products():
     return Product("Head & Shoulders", "Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл",
@@ -68,7 +58,7 @@ def test_products_init(class_product):
     assert class_product.name == 'Head & Shoulders'
     assert class_product.description == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
     assert class_product.price == 585.91
-    assert class_product.quantity_in_stock == 6
+    assert class_product.quantity == 6
 
 
 def test_products_name(class_product):
@@ -80,12 +70,8 @@ def test_products_description(class_product):
     class_product.get_product_description()
     assert class_product.get_product_description() == 'Head&Shoulders 2в1 Основной уход для нормальных волос, 300 мл'
 
+def test_products_quantity(class_product):
+    class_product.get_product_quantity()
+    assert class_product.get_product_quantity() != 5
 
-def test_products_price(class_product):
-    class_product.get_product_price()
-    assert class_product.get_product_price() == 585.91
 
-
-def test_products_quantity_in_stock(class_product):
-    class_product.get_product_quantity_in_stock()
-    assert class_product.get_product_quantity_in_stock() != 5

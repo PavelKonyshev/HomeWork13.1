@@ -1,6 +1,7 @@
 import json
 import os
-from src import classes
+from src import class_category
+from src import class_product
 
 
 def load_data():
@@ -18,12 +19,12 @@ def convert_data(categories):
     for category in categories:
         convert_products = []
         for product in category["products"]:
-            current_product = classes.Product(product["name"],
+            current_product = (class_product.Product(product["name"],
                                               product["description"],
                                               product["price"],
-                                              product["quantity"])
+                                              product["quantity"]))
             convert_products.append(current_product)
-        current_category = classes.Category(category["name"],
+        current_category = class_category.Category(category["name"],
                                             category["description"],
                                             convert_products)
         convert_categories.append(current_category)
@@ -31,7 +32,7 @@ def convert_data(categories):
 
 for category in convert_data(load_data()):
     print(category)
-    for product in category.get_goods():
+    for product in category.goods():
         print(product)
         new_price = float(input("Введите новую цену"))
         product.price = new_price
