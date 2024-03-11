@@ -29,4 +29,10 @@ def convert_data(categories):
         convert_categories.append(current_category)
     return convert_categories
 
-
+for category in convert_data(load_data()):
+    print(category)
+    for product in category.get_goods():
+        print(product)
+        new_price = float(input("Введите новую цену"))
+        product.price = new_price
+        print(product)
