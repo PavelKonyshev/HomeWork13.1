@@ -3,13 +3,13 @@ class Product:
     description: str
     price: float
     quantity: int
-
     def __init__(self, name, description, price, quantity):
         """Инициализация класса продукт"""
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+
 
     def get_product_name(self):
         return self.name
@@ -69,3 +69,24 @@ class Product:
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
+
+class SmartPhone(Product):
+    def __init__(self, name, description, price, quantity, performance, model, memory, color):
+        self.perfomace = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+        super().__init__(name, description, price,quantity)
+
+    def __str__(self):
+        return super().__str__() + f", Модель: {self.model}, Цвет: {self.color}, Память: {self.memory}GB"
+
+class LawGrass(Product):
+    def __init__(self, name, description, price, quantity, manufacturer, germination_time, color):
+        self.manufacturer = manufacturer
+        self.germination_time = germination_time
+        self.color = color
+        super().__init__(name, description,price, quantity)
+    def __str__(self):
+        return super().__str__() + (f", Страна: {self.manufacturer}, "
+                                    f"Время прорастания: {self.germination_time} дней, Цвет: {self.color}")
