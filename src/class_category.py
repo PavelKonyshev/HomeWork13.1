@@ -1,5 +1,4 @@
-
-class Category:
+class Category():
     """Создание класса категории"""
     name = str
     description: str
