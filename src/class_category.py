@@ -1,3 +1,4 @@
+from src.class_product import Product
 class Category():
     """Создание класса категории"""
     name = str
@@ -7,42 +8,70 @@ class Category():
     unique_goods = 0
 
 
-    def __init__(self, name, description, goods):
+    def __init__(self, name, description):
         """Инициализация класса категории"""
         self.name = name
         self.description = description
-        self.__goods = goods
+        self.__goods = []
 
-        Category.total_numbers_of_category += 1
-        Category.unique_goods += 1
-
-    def get_name(self):
-        return self.name
-
-    def get_description(self):
-        return self.description
-
+        Category.total_numbers_of_category = 0 #Счетчик общего количества категорий
+        Category.unique_goods = 0 #Общее количество уникальных продуктов
 
     @property
     def goods(self):
         """Получение приватного атрибута __goods"""
         return self.__goods
 
-    def add_goods(self, product):
-        """Добавление данных с приватного атрибута __goods"""
-        self.__goods.append(product)
-
-    @property
-    def __str__(self):
-        """Получение имени, цены и остатка"""
-        current_list = []
-        for product in self.__goods:
-            current_list.append(f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.')
-        return current_list
-
-    def __repr__(self):
-        return f'Category({self.name}, {self.description}, {self.__goods})'
+    def add_goods(self, good):
+        """
+        Метод добавления товара в список и считает итоговое количество всех продуктов
+        """
+        if isinstance(good, Product):
+            for item in self.__goods:
+                if item[0] == good.name:
+                    item[3] += good.quantity
+                    break
+            else:
+                self.__goods.append([good.name, good.description, good.price, good.quantity])
+                Category.unique_goods += 1
+        else:
+            return f'Нельзя добавить объект отличный от класса Product или его наследников'
 
     def __len__(self):
-        self.count_of_products = len(self.__goods)
-        return f'{self.name}, количество продуктов: {self.count_of_products} шт.'
+        """
+        Вывод количества продуктов на складе
+        """
+        return len(self.__goods)
+
+    def __str__(self):
+        """Получение имени, цены и остатка"""
+        return f'Название категории: {self.name}, количество продуктов: {self.__len__()} шт.'
+
+
+
+if __name__ == '__main__':
+    category_1 = Category('Телефоны', 'мобильные телефоны')  # Экземпляр класса Category
+    product_1 = Product('Samsung', 'smth', 90_000, 2)  # Экземпляр класса Product
+    product_2 = Product('iPhone', 'smth', 100_000, 3)  # Экземпляр класса Product
+    print(category_1.goods)
+
+    category_1.add_goods(product_1)  # Добавление продукта в приватный список товаров
+    print(category_1.goods)
+    category_1.add_goods(product_2)  # Добавление продукта в приватный список товаров
+    print(category_1.goods)
+
+    product_3 = Product('iPhone', 'smth', 100_000, 34)
+    category_1.add_goods(product_3)  # Добавление продукта в приватный список товаров если такой продукт существует
+    print(category_1.goods)  # Отображение приватного списка товаров
+
+    print(f'Уникальных продуктов: {category_1.total_numbers_of_category}')  # Количество уникальных товаров в приватном списке
+    print(category_1.__str__)  # Получение перечня товаров определенным форматом
+    print(str(category_1))  # Отображение строкового представления
+
+    print(f'Вывод  общего количества продуктов категории: {category_1.total_numbers_of_category}')
+
+    class Something:
+        pass
+
+    something = Something()
+    category_1.add_goods(something)
