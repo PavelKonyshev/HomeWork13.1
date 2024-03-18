@@ -1,11 +1,11 @@
-from class_category import Category
-from class_product import Product
-from src.utils import load_data
-from pprint import pprint
+#from class_category import Category
+#from class_product import Product
+#from src.utils import load_data
+#from pprint import pprint
 
-def main():
-    data = load_data()
-    list_category = []
+#def main():
+#    data = load_data()
+#    list_category = []
 #    for unit in data:
 #        list_product = [un for un in unit["products"]]
 #        category = Category(unit["name"], unit["description"], unit["products"])
@@ -22,5 +22,5 @@ def main():
 #                          f'{product.get_product_quantity()}\n\n'
 #                          )
 #       pprint(list_category)
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()
