@@ -1,5 +1,15 @@
 from src.class_product import Product
-class Category():
+from abc import ABC, abstractmethod
+
+class AbstectCategory(ABC):
+    @abstractmethod
+    def __init__(self):
+        """
+        абстрактный метод инициализация
+        """
+
+
+class Category(AbstectCategory):
     """Создание класса категории"""
     name = str
     description: str
@@ -14,8 +24,8 @@ class Category():
         self.description = description
         self.__goods = []
 
-        Category.total_numbers_of_category = 0 #Счетчик общего количества категорий
-        Category.unique_goods = 0 #Общее количество уникальных продуктов
+        Category.total_numbers_of_category += 1 #Счетчик общего количества категорий
+
 
     @property
     def goods(self):
@@ -36,6 +46,29 @@ class Category():
                 Category.unique_goods += 1
         else:
             return f'Нельзя добавить объект отличный от класса Product или его наследников'
+
+
+    @property
+    def counting_goods(self):
+        count = 0
+        for i in self.__goods:
+            count += i[3]
+        return count
+    def __repr__(self):
+        """
+        отоброжение экземляра категории
+        """
+        return f'{self.name}, {self.description}, {self.__goods}'
+
+    @property
+    def get_format(self):
+        """
+        геттер для вывода формата
+        """
+        result = ''
+        for good in self.__goods:
+            result += f'{good[0]}, {good[2]} руб. Остаток: {good[3]} шт. \n'
+        return result
 
     def __len__(self):
         """
