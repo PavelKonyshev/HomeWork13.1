@@ -37,6 +37,8 @@ class Category(AbstectCategory):
         Метод добавления товара в список и считает итоговое количество всех продуктов
         """
         if isinstance(good, Product):
+            if good.quantity <= 0:
+                raise ValueError ("Товар с нулевым количеством не может быть добавлен")
             for item in self.__goods:
                 if item[0] == good.name:
                     item[3] += good.quantity
@@ -80,7 +82,18 @@ class Category(AbstectCategory):
         """Получение имени, цены и остатка"""
         return f'Название категории: {self.name}, количество продуктов: {self.__len__()} шт.'
 
-
+    def average_price(self):
+        """
+        Метод, который подсчитывает средний ценник всех товаров.
+        """
+        result = 0
+        for good in self.__goods:
+            result += good.price * good.quantity
+        try:
+            result = int(result / self.__len__())
+        except ZeroDivisionError:
+            print("Деление на 0 количество товаров")
+        return result
 
 if __name__ == '__main__':
     category_1 = Category('Телефоны', 'мобильные телефоны')  # Экземпляр класса Category
