@@ -1,17 +1,41 @@
-class Product:
+from abc import ABC, abstractmethod
+
+class AbsctactProduct(ABC):
+    @abstractmethod
+    def launch_product(cls, new_product):
+        """
+        класс метод добавления новых товаров
+        """
+class MixinLog:
+    """
+    Класс миксин для вывода repr
+    """
+    def __init__(self, *args, **kwargs):
+        print(repr(self))
+
+    def __repr__(self):
+        list_attr = []
+        for i in self.__dict__.items():
+            list_attr.append(i[1])
+            return f'Создание нового экземпляра родукта - {self.__class__.__name__}{tuple(list_attr)}'
+class Product(MixinLog, AbsctactProduct):
     name: str
     description: str
     price: float
     quantity: int
+    count_product = 0
     def __init__(self, name, description, price, quantity):
         """Инициализация класса продукт"""
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        Product.count_product += 1
         super().__init__()
 
-
+    @classmethod
+    def launch_product(cls, new_product):
+        return cls(**new_product)
 
     @property
     def price(self):
@@ -61,7 +85,7 @@ class Product:
             raise TypeError('Можно складывать только экземпляры одного и того же класса!')
 
     def __str__(self):
-        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
+        return f'Название продукта: {self.name}, {self.__price} руб. Остаток: {self.quantity} шт.'
 
 class SmartPhone(Product):
     def __init__(self, name, description, price, quantity, performance, model, memory, color):
@@ -86,10 +110,23 @@ class LawGrass(Product):
         return super().__str__() + (f", Страна: {self.manufacturer}, "
                                     f"Время прорастания: {self.germination_time} дней, Цвет: {self.color}")
 
-#if __name__ == '__main__':
-#    new_product_3 = {
-#        'name': 'Nokia',
-#        'description': 'smth',
-#        'price': 1000,
-#        'quantity': 10
-#    }
+if __name__ == '__main__':
+    # Создание словаря для дальнейшего добавления в экземпляры класса
+    new_product_3 = {
+        'name': 'Nokia',
+        'description': 'smth',
+        'price': 1000,
+        'quantity': 10
+    }
+
+    product_3 = Product.launch_product(new_product_3)  # Добавление нового продукта
+    print(product_3)  # Вывод добавленного словаря
+
+    product_1 = Product('Samsung', 'smth', 90_000, 2)
+    print(product_1)
+    product_2 = Product('iPhone', 'smth', 100_000, 3)  # Экземпляр класса Product
+
+    lawngrass_1 = LawGrass("трава", "газонная", 100, 3, "Russia", "5 лет", "зеленая")
+
+    print(f'Метод add для 2х экземпляров класса Product: {product_1 + product_2}')
+
